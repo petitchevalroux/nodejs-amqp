@@ -23,7 +23,7 @@ describe("Consumer", function () {
             assert.equal(config, "config.connection");
             callback();
         }));
-        toRestore.push(sinon.stub(connection, "connect", function (callback) {
+        toRestore.push(sinon.stub(connection, "get", function (callback) {
             callback(null, {"createChannel": function () {
                     return {
                         "then": function (callback) {

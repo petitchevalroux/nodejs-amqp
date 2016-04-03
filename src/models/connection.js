@@ -28,7 +28,7 @@ Connection.prototype.getConnectString = function(callback) {
     });
 };
 
-Connection.prototype.connect = function(callback) {
+Connection.prototype.open = function(callback) {
     var self = this;
     self.getConnectString(function(err, connectString) {
         if (err) {
@@ -42,6 +42,22 @@ Connection.prototype.connect = function(callback) {
             }).catch(function(err) {
                 callback(err);
             });
+    });
+};
+
+Connection.prototype.get = function (callback) {
+    if (this.openConnection) {
+        callback(null, this.openConnection);
+        return;
+    }
+    var self = this;
+    this.open(function (err, connection) {
+        if (err) {
+            callback(err);
+            return;
+        }
+        self.openConnection = connection;
+        callback(null, connection);
     });
 };
 
