@@ -25,22 +25,22 @@ describe("Publisher", function () {
         }));
         toRestore.push(sinon.stub(connection, "get", function (callback) {
             callback(null, {"createChannel": function () {
-                    return {
-                        "then": function (callback) {
-                            callback({
-                                "assertQueue": function (queueName) {
-                                    assert.equal(queueName, "config.queue.name");
-                                },
-                                "sendToQueue": function (queueName, bufferMessage, options) {
-                                    assert.equal(queueName, "config.queue.name");
-                                    assert.equal(bufferMessage.toString(), "message");
-                                    assert.equal(options, "options");
-                                }
-                            });
-                            return {"catch": function () {}};
-                        }
-                    };
-                }});
+                return {
+                    "then": function (callback) {
+                        callback({
+                            "assertQueue": function (queueName) {
+                                assert.equal(queueName, "config.queue.name");
+                            },
+                            "sendToQueue": function (queueName, bufferMessage, options) {
+                                assert.equal(queueName, "config.queue.name");
+                                assert.equal(bufferMessage.toString(), "message");
+                                assert.equal(options, "options");
+                            }
+                        });
+                        return {"catch": function () {}};
+                    }
+                };
+            }});
         }));
         toRestore.push(sinon.stub(Publisher, "Connection", function () {
             return connection;
