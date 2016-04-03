@@ -7,11 +7,22 @@
     "test": "test"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "make test",
+    "lint": "node ./node_modules/eslint/bin/eslint.js ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/petitchevalroux/nodejs-amqp.git"
   },
   "author": "Patrick Poulain",
   "license": "GPL-3.0",
   "dependencies": {
     "amqplib": "^0.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^2.6.0",
+    "istanbul": "^0.4.2",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.3"
   }
 }

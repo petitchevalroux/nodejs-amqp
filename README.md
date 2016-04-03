@@ -46,6 +46,5 @@ consumer.consume(
 ```
 
 ##Todo
-- Refactorize publisher and consumer
-- Do not create channel each time for consumer
+- Improve test coverage
 
