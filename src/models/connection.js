@@ -1,29 +1,10 @@
 "use strict";
 
-var Connection = function() {
+var path = require("path");
 
-};
+var Connection = require(path.join(__dirname, "common"));
 
 Connection.prototype.amqp = require("amqplib");
-
-Connection.prototype.log = function(message, level) {
-
-};
-
-Connection.prototype.getConfig = function(callback) {
-    if (!this.config) {
-        callback(new Error("Configuration not setted"));
-    } else {
-        callback(null, this.config);
-    }
-};
-
-Connection.prototype.setConfig = function(config, callback) {
-    this.config = config;
-    if (callback) {
-        callback(null, config);
-    }
-};
 
 Connection.prototype.getConnectString = function(callback) {
     this.getConfig(function(err, config) {
