@@ -23,28 +23,28 @@ describe("Consumer", function () {
             assert.equal(config, "config.connection");
             callback();
         }));
-        toRestore.push(sinon.stub(connection, "connect", function (callback) {
+        toRestore.push(sinon.stub(connection, "get", function (callback) {
             callback(null, {"createChannel": function () {
-                    return {
-                        "then": function (callback) {
-                            callback({
-                                "assertQueue": function (queueName) {
-                                    assert.equal(queueName, "config.queue.name");
-                                },
-                                "consume": function (queueName, func, options) {
-                                    assert.equal(queueName, "config.queue.name");
-                                    assert.equal(func, "func");
-                                    assert.equal(options, "options");
-                                    return {"then": function (callback) {
-                                            callback("consumer");
-                                            return {"catch": function () {}};
-                                        }};
-                                }
-                            });
-                            return {"catch": function () {}};
-                        }
-                    };
-                }});
+                return {
+                    "then": function (callback) {
+                        callback({
+                            "assertQueue": function (queueName) {
+                                assert.equal(queueName, "config.queue.name");
+                            },
+                            "consume": function (queueName, func, options) {
+                                assert.equal(queueName, "config.queue.name");
+                                assert.equal(func, "func");
+                                assert.equal(options, "options");
+                                return {"then": function (callback) {
+                                    callback("consumer");
+                                    return {"catch": function () {}};
+                                }};
+                            }
+                        });
+                        return {"catch": function () {}};
+                    }
+                };
+            }});
         }));
         toRestore.push(sinon.stub(Consumer, "Connection", function () {
             return connection;
