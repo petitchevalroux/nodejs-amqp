@@ -6,7 +6,7 @@ var Publisher = function () {
 
 };
 
-Publisher.prototype.Connection = require(path.join(__dirname, "connection"));
+Publisher.Connection = require(path.join(__dirname, "connection"));
 
 
 Publisher.prototype.getConfig = function (callback) {
@@ -37,7 +37,7 @@ Publisher.prototype.getConnection = function (callback) {
                 callback(err);
                 return;
             }
-            self.connection = new self.Connection();
+            self.connection = new Publisher.Connection();
             self.connection.log = self.log;
             self.connection.setConfig(config.connection, function (err) {
                 if (err) {
