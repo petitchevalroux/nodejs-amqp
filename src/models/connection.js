@@ -71,20 +71,20 @@ Connection.prototype.get = function (callback) {
             return;
         }
         connection.on("error", function (error) {
-            delete self.openConnection;
-            var e = new ConnectionError("Connection error", error);
-            self.log(e, "error");
-            self.emit("error", e);
+            self.onError(new ConnectionError("Connection error", error));
         });
         connection.on("close", function (error) {
-            delete self.openConnection;
-            var e = new ConnectionError("Connection closed", error);
-            self.log(e, "error");
-            self.emit("error", e);
+            self.onError(new ConnectionError("Connection close", error));
         });
         self.openConnection = connection;
         callback(null, connection);
     });
+};
+
+Connection.prototype.onError = function (error) {
+    delete this.openConnection;
+    this.log(error, "error");
+    this.emit("error", error);
 };
 
 module.exports = Connection;

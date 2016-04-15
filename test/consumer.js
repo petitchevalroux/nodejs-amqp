@@ -39,7 +39,8 @@ describe("Consumer", function () {
                                     callback("consumer");
                                     return {"catch": function () {}};
                                 }};
-                            }
+                            },
+                            "on":function() {}
                         });
                         return {"catch": function () {}};
                     }
