@@ -15,7 +15,6 @@ CommonAmqp.prototype.getConnection = function (config, callback) {
     var connection = new CommonAmqp.Connection();
     connection.log = self.log;
     connection.on("error", function(error) {
-        delete self.channel;
         self.emit("error", error);
     });
     connection.setConfig(config.connection, function (err) {
@@ -51,6 +50,12 @@ CommonAmqp.prototype.getChannel = function (callback) {
                 }
                 amqp.createChannel().then(function (channel) {
                     self.channel = channel;
+                    self.channel.on("error",function(error) {
+                        self.emit("error", error);
+                    });
+                    self.channel.on("close",function(error) {
+                        self.emit("error", error);
+                    });
                     // Create queue if it does not exist
                     channel.assertQueue(config.queue.name);
                     callback(null, self.channel);

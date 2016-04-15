@@ -35,7 +35,8 @@ describe("Publisher", function () {
                                 assert.equal(queueName, "config.queue.name");
                                 assert.equal(bufferMessage.toString(), "message");
                                 assert.equal(options, "options");
-                            }
+                            },
+                            "on":function() {}
                         });
                         return {"catch": function () {}};
                     }
