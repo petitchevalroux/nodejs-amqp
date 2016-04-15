@@ -14,6 +14,10 @@ CommonAmqp.prototype.getConnection = function (config, callback) {
     var self = this;
     var connection = new CommonAmqp.Connection();
     connection.log = self.log;
+    connection.on("error", function(error) {
+        delete self.channel;
+        self.emit("error", error);
+    });
     connection.setConfig(config.connection, function (err) {
         if (err) {
             callback(err);
